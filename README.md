@@ -59,7 +59,7 @@ Nếu ESP32 báo lỗi kết nối MQTT trên Serial Monitor, kiểm tra Wokwi �
 
 Trên máy Windows đang dùng, PlatformIO nằm tại `C:\Users\duyhu\.platformio\penv\Scripts\pio.exe`; có thể chạy `& 'C:\Users\duyhu\.platformio\penv\Scripts\pio.exe' run -e wokwi`. Kiểm tra riêng Broker/Backend bằng `python backend/smoke_mqtt.py` trước khi mở Wokwi.
 
-Xem [PROJECT_PLAN.md](PROJECT_PLAN.md) để biết phần đã có và các việc còn phải hoàn thiện.
+Xem [PROJECT_PLAN.md](PROJECT_PLAN.md) để biết phần đã có và các việc còn phải hoàn thiện; [TEAM_WORK.md](TEAM_WORK.md) ghi phân công ba người và ba nhánh.
 
 ## Giới hạn hiện tại
 
