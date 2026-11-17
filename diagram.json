@@ -8,7 +8,13 @@
     { "type": "wokwi-slide-switch", "id": "door", "top": 230, "left": 280, "attrs": { "bounce": "0" } },
     { "type": "wokwi-led", "id": "lock", "top": 45, "left": 350, "attrs": { "color": "yellow" } },
     { "type": "wokwi-led", "id": "ok", "top": 105, "left": 350, "attrs": { "color": "green" } },
-    { "type": "wokwi-led", "id": "error", "top": 165, "left": 350, "attrs": { "color": "red" } }
+    { "type": "wokwi-led", "id": "error", "top": 165, "left": 350, "attrs": { "color": "red" } },
+    { "type": "wokwi-buzzer", "id": "buzzer", "top": 280, "left": 450, "attrs": { "volume": "0.25" } },
+    { "type": "wokwi-pir-motion-sensor", "id": "pir", "top": 340, "left": 440, "attrs": { "delayTime": "5" } },
+    { "type": "wokwi-led", "id": "light", "top": 225, "left": 440, "attrs": { "color": "white" } },
+    { "type": "wokwi-gas-sensor", "id": "smoke", "top": 430, "left": 440, "attrs": { "ppm": "400", "threshold": "4.4" } },
+    { "type": "wokwi-lcd1602", "id": "lcd", "top": 345, "left": 590, "attrs": { "pins": "i2c", "i2cAddress": "0x27", "background": "blue", "color": "white" } },
+    { "type": "wokwi-hx711", "id": "scale", "top": 495, "left": 590, "attrs": { "type": "5kg" } }
   ],
   "connections": [
     ["esp:3V3", "rfid:3.3V", "red", []],
@@ -25,7 +31,25 @@
     ["esp:33", "error:A", "red", []],
     ["esp:GND.2", "lock:C", "black", []],
     ["esp:GND.2", "ok:C", "black", []],
-    ["esp:GND.2", "error:C", "black", []]
+    ["esp:GND.2", "error:C", "black", []],
+    ["esp:4", "buzzer:2", "purple", []],
+    ["esp:GND.2", "buzzer:1", "black", []],
+    ["esp:3V3", "pir:VCC", "red", []],
+    ["esp:GND.2", "pir:GND", "black", []],
+    ["esp:34", "pir:OUT", "green", []],
+    ["esp:14", "light:A", "white", []],
+    ["esp:GND.2", "light:C", "black", []],
+    ["esp:5V", "smoke:VCC", "red", []],
+    ["esp:GND.2", "smoke:GND", "black", []],
+    ["esp:35", "smoke:DOUT", "green", []],
+    ["esp:3V3", "lcd:VCC", "red", []],
+    ["esp:GND.2", "lcd:GND", "black", []],
+    ["esp:21", "lcd:SDA", "blue", []],
+    ["esp:22", "lcd:SCL", "yellow", []],
+    ["esp:5V", "scale:VCC", "red", []],
+    ["esp:GND.2", "scale:GND", "black", []],
+    ["esp:16", "scale:DT", "green", []],
+    ["esp:17", "scale:SCK", "orange", []]
   ],
   "serialMonitor": { "display": "terminal" },
   "dependencies": {}
