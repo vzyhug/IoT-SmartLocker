@@ -36,6 +36,8 @@ MFRC522 VCC nối **3,3 V**, GND nối GND. Đối với driver MOSFET low-side:
 3. Gắn driver và khóa với nguồn 12 V riêng; đo điện áp, dòng thường và dòng khởi động. Quan sát nóng, sụt nguồn, ESP32 reset và chiều diode. Chỉ gắn vào cửa sau khi các phép thử này đạt.
 4. Thử cửa mở/đóng, bỏ ngỏ, mở ngoài phiên, mất Wi-Fi/Broker và mất điện. Ghi log, số lần lặp, thông số nguồn và video. Nếu nguồn khóa có thể làm ESP32 reset hoặc chốt mở ngoài ý muốn, dừng thử và sửa mạch nguồn/driver.
 
+Đối với MQTT/TLS trên bo thật, mạng phải cho ESP32 truy cập DNS và NTP được chỉ định trong `secrets.h`; firmware chỉ kết nối Broker sau khi có giờ đáng tin cậy để kiểm tra chứng chỉ. Nếu tủ đặt trong VLAN riêng, nhóm mạng cần cấp luồng này theo chính sách ở tài liệu tổng hợp.
+
 ## Giới hạn
 
 - Reed switch xác nhận trạng thái cửa, không xác nhận chốt đã gài hay có kiện hàng.

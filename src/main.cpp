@@ -16,6 +16,7 @@
 #define LOCKER_ID "locker01"
 #else
 #include <WiFiClientSecure.h>
+#include <time.h>
 #include "secrets.h"
 #endif
 
@@ -49,6 +50,9 @@ uint32_t authAt = 0, grantedAt = 0, openedAt = 0, cardAt = 0, connectAt = 0;
 uint32_t rawChangedAt = 0;
 bool rawDoorOpen = false, stableDoorOpen = false, leftOpenReported = false;
 bool wifiStarted = false;
+#ifndef WOKWI_SIM
+bool timeSyncRequested = false;
+#endif
 
 void lockOff() { digitalWrite(LOCK_PIN, LOW); }
 
@@ -172,6 +176,14 @@ void updateNetwork(uint32_t now) {
     return;
   }
   if (mqtt.connected()) return;
+#ifndef WOKWI_SIM
+  if (!timeSyncRequested) {
+    configTime(0, 0, NTP_SERVER);
+    timeSyncRequested = true;
+    Serial.println("Waiting for trusted time before MQTT/TLS");
+  }
+  if (time(nullptr) < 1700000000) return;
+#endif
 #ifdef WOKWI_SIM
   bool connected = mqtt.connect(LOCKER_ID);
 #else
