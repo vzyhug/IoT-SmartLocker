@@ -33,8 +33,10 @@ def on_message(client, userdata, message):
 
 
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id="smartlocker-backend")
-client.username_pw_set(os.environ["MQTT_USER"], os.environ["MQTT_PASSWORD"])
-client.tls_set(ca_certs=os.environ["MQTT_CA_FILE"], tls_version=ssl.PROTOCOL_TLS_CLIENT)
+if os.getenv("MQTT_USER"):
+    client.username_pw_set(os.environ["MQTT_USER"], os.environ["MQTT_PASSWORD"])
+if os.getenv("MQTT_TLS", "1") != "0":
+    client.tls_set(ca_certs=os.environ["MQTT_CA_FILE"], tls_version=ssl.PROTOCOL_TLS_CLIENT)
 client.on_connect = on_connect
 client.on_message = on_message
 client.connect(os.getenv("MQTT_HOST", "localhost"), int(os.getenv("MQTT_PORT", "8883")), 30)

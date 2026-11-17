@@ -4,7 +4,7 @@ import secrets
 import sqlite3
 import threading
 import time
-from contextlib import contextmanager
+from contextlib import closing, contextmanager
 from pathlib import Path
 
 from fastapi import Depends, FastAPI, Header, HTTPException
@@ -19,11 +19,11 @@ api = FastAPI(title="Smart Locker N11 demo")
 @contextmanager
 def db():
     DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with _lock, sqlite3.connect(DB_PATH) as conn:
-        conn.row_factory = sqlite3.Row
-        conn.execute("PRAGMA foreign_keys=ON")
-        yield conn
-        conn.commit()
+    with _lock, closing(sqlite3.connect(DB_PATH)) as conn:
+        with conn:
+            conn.row_factory = sqlite3.Row
+            conn.execute("PRAGMA foreign_keys=ON")
+            yield conn
 
 
 def init_db():

@@ -44,6 +44,23 @@ Tạo một đơn qua `POST /orders` với header `Authorization: Bearer <LOCKER
 
 UID phải là chuỗi hex mà firmware in/đọc từ thẻ thực tế. Xem trạng thái bằng `GET /orders` cùng header. Không dùng cùng một thẻ cho cả shipper và khách trong bản demo.
 
+## Chạy mô phỏng Wokwi trên VS Code
+
+Mô phỏng dùng `Wokwi-GUEST`, Broker Mosquitto trên máy qua `host.wokwi.internal:1883` và không dùng TLS. Chế độ này **chỉ dành cho mô phỏng cục bộ**; firmware cho tủ thật vẫn dùng TLS/8883. Wokwi for VS Code cần Private IoT Gateway của extension để đi tới Broker localhost. Cần có extension PlatformIO IDE và Wokwi for VS Code.
+
+1. Đảm bảo Mosquitto trên máy đang chạy và chấp nhận kết nối localhost:1883. Giữ Broker này cho mô phỏng; không đưa cổng 1883 không xác thực ra Internet.
+2. Trong PowerShell ở thư mục project, chạy `python -m pip install -r backend/requirements.txt`. Đặt `$env:MQTT_TLS='0'`, `$env:MQTT_HOST='127.0.0.1'`, `$env:MQTT_PORT='1883'`, rồi chạy `python backend/mqtt_worker.py` trong terminal thứ nhất.
+3. Đặt `$env:LOCKER_ADMIN_TOKEN` thành một giá trị chỉ dùng cục bộ rồi chạy `python -m uvicorn app:api --app-dir backend --host 127.0.0.1 --port 8000` trong terminal thứ hai.
+4. Tạo đơn qua `POST /orders` theo ví dụ trên; dùng `shipper_uid='AABBCCDD'` (thẻ đỏ) và `customer_uid='11223344'` (thẻ xanh lá) của Wokwi. UID trên Wokwi hiển thị có dấu `:`, còn Backend lưu chuỗi hex không dấu.
+5. Build firmware: `pio run -e wokwi` (hoặc dùng đường dẫn PlatformIO trên máy). Mở Command Palette của VS Code và chọn **Wokwi: Start Simulator**. `wokwi.toml` trỏ tới firmware vừa build; `diagram.json` chứa sơ đồ đấu nối.
+6. Quét thẻ đỏ bằng bảng điều khiển MFRC522. Sau khi LED vàng (xung khóa) và LED xanh bật, chuyển công tắc **Door** sang mở rồi về đóng. `GET /orders` phải chuyển sang `waiting_pickup`. Lặp lại với thẻ xanh lá; trạng thái phải thành `received`.
+
+Nếu ESP32 báo lỗi kết nối MQTT trên Serial Monitor, kiểm tra Wokwi đang dùng Private IoT Gateway, Broker còn lắng nghe 1883 và `host.wokwi.internal` phân giải được. Mô phỏng không kiểm chứng khóa 12 V, cảm biến hàng hay TLS của bản triển khai thật.
+
+Trên máy Windows đang dùng, PlatformIO nằm tại `C:\Users\duyhu\.platformio\penv\Scripts\pio.exe`; có thể chạy `& 'C:\Users\duyhu\.platformio\penv\Scripts\pio.exe' run -e wokwi`. Kiểm tra riêng Broker/Backend bằng `python backend/smoke_mqtt.py` trước khi mở Wokwi.
+
+Xem [PROJECT_PLAN.md](PROJECT_PLAN.md) để biết phần đã có và các việc còn phải hoàn thiện.
+
 ## Giới hạn hiện tại
 
 - Firmware chưa có hàng đợi sự kiện offline, xác nhận ghi DB ở tầng ứng dụng, OTP/QR, load cell hoặc camera. Khi mất MQTT, sự kiện có thể mất; chưa đạt CN06/PCN04. Cảnh báo cửa mở quá lâu mới phát sự kiện và LED tại tủ, chưa có giao diện cảnh báo.
