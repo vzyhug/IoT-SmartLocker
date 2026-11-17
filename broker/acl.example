@@ -1,0 +1,11 @@
+# Demo uses site01/locker01. Provision separate credentials for each device.
+user locker01
+topic write smartlocker/site01/locker01/auth/request
+topic write smartlocker/site01/locker01/event
+topic write smartlocker/site01/locker01/status
+topic read smartlocker/site01/locker01/auth/response
+
+user backend
+topic read smartlocker/site01/+/auth/request
+topic read smartlocker/site01/+/event
+topic write smartlocker/site01/+/auth/response
