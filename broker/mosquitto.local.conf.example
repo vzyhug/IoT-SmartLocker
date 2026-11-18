@@ -1,0 +1,5 @@
+# Chỉ dùng cho mô phỏng trên máy phát triển. Chặn truy cập từ mạng LAN/Internet.
+listener 1883 127.0.0.1
+protocol mqtt
+allow_anonymous true
+persistence false

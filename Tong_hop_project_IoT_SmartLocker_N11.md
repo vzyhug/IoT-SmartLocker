@@ -5,6 +5,8 @@
 **Đề tài:** 67 – Nhóm N11  
 **Phạm vi tài liệu:** Tổng hợp báo cáo giai đoạn 1, 2, 3 và các sơ đồ hệ thống được cung cấp.
 
+> **Phạm vi triển khai hiện tại của repo:** demo được thực hiện hoàn toàn bằng thiết bị ảo trong Wokwi và phần mềm chạy local; nhóm không sử dụng thiết bị vật lý. Các yêu cầu về khóa 12 V, UPS, cảm biến/camera thật, đo điện và lắp tủ trong tài liệu này là thiết kế tham khảo cho hướng phát triển sau, không phải điều kiện để hoàn thành demo Wokwi. Khi nghiệm thu demo, dùng linh kiện mô phỏng tương ứng và ghi rõ phần nào Wokwi chưa mô phỏng được.
+
 > Tài liệu mô tả yêu cầu, thiết kế và kế hoạch triển khai. Các thông số hiệu năng là mục tiêu hoặc dự kiến; nguồn cung cấp chưa có kết quả kiểm thử để xác nhận hệ thống đã đạt các thông số này. Các phần được ghi “đề xuất thống nhất” là nội dung làm rõ để nối các giai đoạn thành một thiết kế nhất quán.
 
 ## 1. Tổng quan dự án
@@ -34,7 +36,7 @@ Hệ thống kết hợp điều khiển khóa tại thiết bị biên, xác th
 | Phần mềm | MQTT, Dashboard và chức năng quản lý cần thiết cho demo | Backend đầy đủ về người dùng, đơn hàng, ngăn tủ, OTP và báo cáo |
 | Mạng | Mạng nội bộ; VLAN/firewall triển khai trên thiết bị hỗ trợ hoặc mô phỏng riêng | Hạ tầng phân đoạn VLAN thực tế, DMZ và truy cập Internet qua HTTPS |
 
-Camera, cảm biến khói/nhiệt và chuyển động xuất hiện trong định hướng giai đoạn 1 nhưng chưa có cấu hình chi tiết tương ứng trong danh mục phần cứng giai đoạn 2. Vì vậy, chúng được giữ ở phạm vi mở rộng. Mô phỏng mạng chỉ kiểm chứng phần cấu hình/topology phù hợp, không thay thế kiểm thử toàn tuyến ESP32–MQTT–khóa thật.
+Camera, cảm biến khói/nhiệt và chuyển động xuất hiện trong định hướng giai đoạn 1 nhưng chưa có cấu hình chi tiết tương ứng trong danh mục phần cứng giai đoạn 2. Vì vậy, chúng được giữ ở phạm vi mở rộng. Demo repo dùng Wokwi để kiểm thử toàn tuyến ESP32 ảo–MQTT local–Backend; các thiết bị vật lý không thuộc phạm vi triển khai hiện tại.
 
 ## 2. Tác nhân và yêu cầu hệ thống
 

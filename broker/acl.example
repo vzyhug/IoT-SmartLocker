@@ -3,9 +3,20 @@ user locker01
 topic write smartlocker/site01/locker01/auth/request
 topic write smartlocker/site01/locker01/event
 topic write smartlocker/site01/locker01/status
+topic write smartlocker/site01/locker01/telemetry
+topic write smartlocker/site01/locker01/ack
 topic read smartlocker/site01/locker01/auth/response
+topic read smartlocker/site01/locker01/event/ack
+topic read smartlocker/site01/locker01/cmd/config
+topic read smartlocker/site01/locker01/cmd/unlock
 
 user backend
 topic read smartlocker/site01/+/auth/request
 topic read smartlocker/site01/+/event
+topic read smartlocker/site01/+/status
+topic read smartlocker/site01/+/telemetry
+topic read smartlocker/site01/+/ack
 topic write smartlocker/site01/+/auth/response
+topic write smartlocker/site01/+/event/ack
+topic write smartlocker/site01/+/cmd/config
+topic write smartlocker/site01/+/cmd/unlock
